@@ -38,6 +38,7 @@ class Tracker(object):
 		self.minArea   = minArea
 		self.maxArea   = maxArea
 		self.errInd    = []
+		self.subject   = False
 
 	def getContours(self, frame):
 		#intermediate states where frame is being edited'
