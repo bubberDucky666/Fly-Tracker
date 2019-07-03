@@ -15,7 +15,7 @@ class VFS:
  
 		# initialize the queue used to store frames read from
 		# the video file
-		self.Q = Queue(maxsize=queueSize)
+		self.Q = Queue()
 
 	def start(self):
 		# start a thread to read frames from the file video stream
@@ -25,7 +25,7 @@ class VFS:
 		return self
 
 	def update(self):
-				
+			e = 0
 			# keep looping infinitely
 			while True:
 				
@@ -48,6 +48,12 @@ class VFS:
 	 
 						# add the frame to the queue
 						self.Q.put(frame)
+
+						e = e + 1
+						print('e =  {}'.format(e))
+
+				#All of the frames have been queued
+				break
 
 	def read(self):
 		# return next frame in the queue
