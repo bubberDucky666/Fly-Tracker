@@ -17,48 +17,54 @@ def cal(Tracker):
     print("Calibration starting")
 
     var    = True
-    neutAr = []
     while var:
+        neutAr = []
         for i in range(3):
-            img    = ig.grab()
-            neutAr.append(Tracker.getContours(img))
-        if neutAr[0] == neutAr[1] and neutAr[1] == neutAr[2]:
+            img = ig.grab()
+            img = np.array(img)
+
+            val = Tracker.getContours(img)
+            neutAr.append(val)
+            #cv2.imshow("ye", img )
+        c0 = len(neutAr[0])
+        c1 = len(neutAr[1])
+        c2 = len(neutAr[2])
+
+        print(c0, c1, c2)
+
+        if c0 == c1 and c1 ==c2:
             nC  = neutAr[1]
             var = False
 
     print("Calibration compleate")
     input("Hit enter/space, then start recording. Hit same button to end.")
-    return nC
+    return len(nC)
 
-def check(Tracker, nC, output):
+def check(Tracker, nC):
 
     img   = ig.grab()
-    frame = np.array(img)  
-    c = Tracker.getContours(frame)  #need to modify output and take into account premptively detected contours
-    if c > nC:
-        if c-1 == nC:
-            print("One object added")
-            Tracker.subject = 1
-        elif nC - 1 == c:
-            print("One object lost")
-        elif c+1 < nC:
-            print("Multiple objects added")
-            Tracker.subject = 1
-        else:
-            print("Multiple objects lost")
+    img.show()
+    frame = np.array(img)
+
+    val = len(Tracker.getContours(frame))  
+    c = val                 #need to modify output and take into account premptively detected contours
+
+    input(c)
+
+    if c == nC+1:
+        print("One object added")
+        Tracker.subject = 1
+    elif c == nC -1:
+        print("One object lost")
+    elif c < nC -1:
+        print("Multiple objects lost")
+        Tracker.subject = 1
+    elif c > nC+1:
+        print("Multiple objects added")
+    else:
+        print("No changes")
     
     return Tracker.subject
-
-
-
-
-
-
-
-
-
-    
-
 
 
 

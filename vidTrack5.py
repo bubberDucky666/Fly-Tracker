@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 import imageio 			 as im
 import numpy   			 as np
 import time
-import cv2
+from cv2 import cv2
 import _pickle 			 as pickle
 import vidThreading      as vT
 import os
@@ -53,9 +53,9 @@ class Tracker(object):
 		thresh     = cv2.convertScaleAbs(thresh)
 		thresh 	   = cv2.dilate(thresh, None, iterations=1)
 				
-		img, contours, h = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+		contours, h = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
-		return contours, img
+		return contours
 
 	def contourAnalyze(self, contours, pname, **numContours):
 
